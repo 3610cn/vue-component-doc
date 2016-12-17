@@ -3,8 +3,8 @@
     <div class="container">
       <div class="footer-main">
         <p class="footer-main-title">Element 1.0 Hydrogen</p>
-        <a href="https://github.com/ElemeFE/element/issues" class="footer-main-link" target="_blank">{{ langConfig.feedback }}</a>
-        <a href="https://github.com/ElemeFE/element/blob/master/.github/CONTRIBUTING.md" class="footer-main-link" target="_blank">{{ langConfig.contribution }}</a>
+        <a href="https://github.com/ElemeFE/element/issues" class="footer-main-link" target="_blank">反馈建议</a>
+        <a href="https://github.com/ElemeFE/element/blob/master/.github/CONTRIBUTING.md" class="footer-main-link" target="_blank">贡献指南</a>
       </div>
       <div class="footer-social">
         <el-popover
@@ -13,8 +13,7 @@
           width="120"
           popper-class="footer-popover"
           trigger="hover">
-          <div class="footer-popover-title">{{ langConfig.eleme }} UED</div>
-          <img src="../assets/images/qrcode.png" alt="">
+          <div class="footer-popover-title">UED</div>
         </el-popover>
         <i class="doc-icon-weixin elementdoc" v-popover:weixin></i>
         <a href="//github.com/elemefe" target="_blank">
@@ -133,17 +132,6 @@
 </style>
 
 <script type="text/babel">
-  import compoLang from '../i18n/component.json';
-
   export default {
-    computed: {
-      lang() {
-        return this.$route.path.split('/')[1];
-      },
-
-      langConfig() {
-        return compoLang.filter(config => config.lang === this.lang)[0]['footer'];
-      }
-    }
-  };
+  }
 </script>

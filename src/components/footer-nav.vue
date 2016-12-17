@@ -5,13 +5,13 @@
       class="footer-nav-link footer-nav-left"
       @click="handleNavClick('prev')">
       <i class="el-icon-arrow-left"></i>
-      {{ leftNav.title || leftNav.name }}
+      {{leftNav.title || leftNav.name}}
     </span>
     <span
       v-if="rightNav"
       class="footer-nav-link footer-nav-right"
       @click="handleNavClick('next')">
-      {{ rightNav.title || rightNav.name }}
+      {{rightNav.title || rightNav.name}}
       <i class="el-icon-arrow-right"></i>
     </span>
   </div>
@@ -61,61 +61,58 @@
 </style>
 
 <script>
-  import navConfig from '../nav.config.json';
+  import navConfig from '../nav.config.json'
 
   export default {
-    data() {
+    data () {
       return {
         currentComponent: null,
         nav: [],
         currentIndex: -1,
         leftNav: null,
         rightNav: null
-      };
-    },
-
-    computed: {
-      lang() {
-        return this.$route.meta.lang;
       }
     },
 
+    computed: {
+    },
+
     watch: {
-      '$route.path'() {
-        this.setNav();
-        this.updateNav();
+      '$route.path' () {
+        this.setNav()
+        this.updateNav()
       }
     },
 
     methods: {
-      setNav() {
-        let nav = navConfig[this.lang];
-        this.nav = nav[0].children.concat(nav[1]);
+      setNav () {
+        let nav = navConfig
+        this.nav = nav[0].children.concat(nav[1])
         nav[2].groups.map(group => group.list).forEach(list => {
-          this.nav = this.nav.concat(list);
-        });
+          this.nav = this.nav.concat(list)
+        })
       },
 
-      updateNav() {
-        this.currentComponent = '/' + this.$route.path.split('/')[3];
+      updateNav () {
+        this.currentComponent = '/' + this.$route.path.split('/')[3]
         for (let i = 0, len = this.nav.length; i < len; i++) {
           if (this.nav[i].path === this.currentComponent) {
-            this.currentIndex = i;
-            break;
+            this.currentIndex = i
+            break
           }
         }
-        this.leftNav = this.nav[this.currentIndex - 1];
-        this.rightNav = this.nav[this.currentIndex + 1];
+        this.leftNav = this.nav[this.currentIndex - 1]
+        this.rightNav = this.nav[this.currentIndex + 1]
       },
 
-      handleNavClick(direction) {
-        this.$router.push(`/${ this.lang }/component${ direction === 'prev' ? this.leftNav.path : this.rightNav.path }`);
+      handleNavClick (direction) {
+        this.$router.push(`/component${direction === 'prev' ? this.leftNav.path : this.rightNav.path}`)
       }
     },
 
-    created() {
-      this.setNav();
-      this.updateNav();
+    created () {
+      this.setNav()
+      this.updateNav()
     }
-  };
+  }
 </script>

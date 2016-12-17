@@ -1,4 +1,4 @@
-<style>
+<style lang="less">
   .side-nav {
     width: 100%;
     box-sizing: border-box;
@@ -107,67 +107,67 @@
         default: ''
       }
     },
-    data() {
+    data () {
       return {
         highlights: [],
         navState: [],
         isSmallScreen: false
-      };
+      }
     },
     watch: {
-      '$route.path'() {
-        this.handlePathChange();
+      '$route.path' () {
+        this.handlePathChange()
       }
     },
     computed: {
-      navStyle() {
-        return this.isSmallScreen ? { 'padding-bottom': '60px' } : {};
+      navStyle () {
+        return this.isSmallScreen ? { 'padding-bottom': '60px' } : {}
       }
     },
     methods: {
-      handleResize() {
-        this.isSmallScreen = document.documentElement.clientWidth < 768;
-        this.handlePathChange();
+      handleResize () {
+        this.isSmallScreen = document.documentElement.clientWidth < 768
+        this.handlePathChange()
       },
-      handlePathChange() {
+      handlePathChange () {
         if (!this.isSmallScreen) {
-          this.expandAllMenu();
-          return;
+          this.expandAllMenu()
+          return
         }
         this.$nextTick(() => {
-          this.hideAllMenu();
-          let activeAnchor = this.$el.querySelector('a.active');
-          let ul = activeAnchor.parentNode;
+          this.hideAllMenu()
+          let activeAnchor = this.$el.querySelector('a.active')
+          let ul = activeAnchor.parentNode
           while (ul.tagName !== 'UL') {
-            ul = ul.parentNode;
+            ul = ul.parentNode
           }
-          ul.style.height = 'auto';
-        });
+          ul.style.height = 'auto'
+        })
       },
-      hideAllMenu() {
+      hideAllMenu () {
         [].forEach.call(this.$el.querySelectorAll('.pure-menu-list'), ul => {
-          ul.style.height = '0';
-        });
+          ul.style.height = '0'
+        })
       },
-      expandAllMenu() {
+      expandAllMenu () {
         [].forEach.call(this.$el.querySelectorAll('.pure-menu-list'), ul => {
-          ul.style.height = 'auto';
-        });
+          ul.style.height = 'auto'
+        })
       },
-      expandMenu(event) {
-        if (!this.isSmallScreen) return;
-        let target = event.currentTarget;
-        if (!target.nextElementSibling || target.nextElementSibling.tagName !== 'UL') return;
-        this.hideAllMenu();
-        event.currentTarget.nextElementSibling.style.height = 'auto';
+      expandMenu (event) {
+        if (!this.isSmallScreen) return
+        let target = event.currentTarget
+        if (!target.nextElementSibling || target.nextElementSibling.tagName !== 'UL') return
+        this.hideAllMenu()
+        event.currentTarget.nextElementSibling.style.height = 'auto'
       }
     },
-    mounted() {
-      this.handleResize();
-      window.addEventListener('resize', this.handleResize);
+    mounted () {
+      this.handleResize()
+      window.addEventListener('resize', this.handleResize)
     },
-    beforeDestroy() {
-      window.removeEventListener('resize', this.handleResize);
+    beforeDestroy () {
+      window.removeEventListener('resize', this.handleResize)
     }
-  };
+  }
 </script>

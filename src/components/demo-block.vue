@@ -171,7 +171,7 @@
       },
 
       blockClass () {
-        return `demo-${this.lang} demo-alert`
+        return `demo-${this.lang} demo-${this.$router.currentRoute.path.split('/').pop()}`
       },
 
       iconClass () {

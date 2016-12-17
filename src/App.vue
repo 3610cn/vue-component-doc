@@ -1,20 +1,58 @@
 <template>
   <div id="app">
-    <div class="page-container page-component">
-      <AlertDoc></AlertDoc>
+    <div class="main-cnt">
+      <router-view></router-view>
     </div>
   </div>
 </template>
 
 <script>
-import AlertDoc from './docs/alert.md'
+  export default {
+    name: 'app',
 
-export default {
-  name: 'app',
-  components: {
-    AlertDoc
+    methods: {
+
+      renderAnchorHref () {
+        if (/changelog/g.test(location.href)) return
+        const anchors = document.querySelectorAll('h2 a,h3 a')
+        const basePath = location.href.split('#').splice(0, 2).join('#')
+
+        Array.prototype.slice.call(anchors).forEach(a => {
+          const href = a.getAttribute('href')
+          a.href = basePath + href
+        })
+      },
+
+      goAnchor () {
+        if (location.href.match(/#/g).length > 1) {
+          const auchor = location.href.match(/#[^#]+$/g)
+          if (!auchor || auchor.length !== 1) return
+          const elm = document.querySelector(auchor[0])
+          if (!elm) return
+
+          setTimeout(_ => {
+            document.documentElement.scrollTop = document.body.scrollTop = elm.offsetTop
+          }, 50)
+        }
+      }
+    },
+
+    mounted () {
+      this.renderAnchorHref()
+      this.goAnchor()
+    },
+
+    created () {
+      window.addEventListener('hashchange', () => {
+        if (location.href.match(/#/g).length < 2) {
+          document.documentElement.scrollTop = document.body.scrollTop = 0
+          this.renderAnchorHref()
+        } else {
+          this.goAnchor()
+        }
+      })
+    }
   }
-}
 </script>
 
 <style lang="less">
@@ -126,49 +164,4 @@ export default {
     }
   }
 
-  .page-component {
-
-    padding-bottom: 95px;
-    box-sizing: border-box;
-    text-align: left;
-
-    > section {
-      margin-left: -1px;
-      
-      h3 {
-        margin: 45px 0 15px;
-      }
-
-      table {
-        border-collapse: collapse;
-        width: 100%;
-        background-color: #fff;
-        color: #5e6d82;
-        font-size: 14px;
-        margin-bottom: 45px;
-        
-        strong {
-          font-weight: normal;
-        }
-
-        th {
-          text-align: left;
-          border-top: 1px solid #eaeefb;
-          background-color: #EFF2F7;
-          white-space: nowrap;
-        }
-
-        td, th {
-          border-bottom: 1px solid #eaeefb;
-          padding: 10px;
-          max-width: 250px;
-        }
-
-        th:first-child, td:first-child {
-          padding-left: 10px;
-        }
-
-      }
-    }
-  }
 </style>
